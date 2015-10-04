@@ -1,0 +1,27 @@
+
+#dropMenu{
+    position: relative;
+    width:950px;
+}
+#Years{
+    position: absolute;
+    top:0;
+    left: 325px;
+}
+
+#Months{
+    position: absolute;
+    top:0;
+    left: 475px;
+}
+#Days{
+    position: absolute;
+    top:0;
+    left: 625px;
+}
+.dropdown-toggle{
+    width: 100px;
+}
+button[type="submit"]{
+    margin: 30px 170px;
+}
