@@ -2,38 +2,41 @@
 
 namespace App;
 
-use Illuminate\Auth\Authenticatable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Auth\Passwords\CanResetPassword;
-use Illuminate\Foundation\Auth\Access\Authorizable;
-use Illuminate\Contracts\Auth\Authenticatable as AuthenticatableContract;
-use Illuminate\Contracts\Auth\Access\Authorizable as AuthorizableContract;
-use Illuminate\Contracts\Auth\CanResetPassword as CanResetPasswordContract;
 
-class User extends Model implements AuthenticatableContract,
-                                    AuthorizableContract,
-                                    CanResetPasswordContract
+class User extends Model
 {
-    use Authenticatable, Authorizable, CanResetPassword;
+    protected $fillable =[
+        'first_name',
+        'last_name',
+        'email',
+        'password',
+        'sex',
+        'date_of_birth'
+    ];
 
-    /**
-     * The database table used by the model.
-     *
-     * @var string
-     */
     protected $table = 'users';
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array
-     */
-    protected $fillable = ['name', 'email', 'password'];
+    protected $hidden = ['password'];
 
-    /**
-     * The attributes excluded from the model's JSON form.
-     *
-     * @var array
-     */
-    protected $hidden = ['password', 'remember_token'];
+    public function posts()
+    {
+        return $this->hasMany('App\Post');
+    }
+
+    public function comments()
+    {
+        return $this->hasMany('App\Comment');
+    }
+
+    public function comment_votes()
+    {
+        return $this->hasMany('App\Comment_Vote');
+    }
+
+    public function post_votes()
+    {
+        return $this->hasMany('App\Post_Vote');
+    }
+
 }
