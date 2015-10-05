@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
@@ -15,7 +17,7 @@ class PostController extends Controller
      */
     public function index()
     {
-        //
+
     }
 
     /**
@@ -25,7 +27,7 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        return view('posts.create');
     }
 
     /**
@@ -34,9 +36,12 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Requests\PostRequest $request)
     {
-        //
+        $post = new Post($request->all());
+        Auth::user()->posts()->save($post);
+
+        return redirect('posts');
     }
 
     /**
@@ -47,7 +52,9 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        //
+        $post = Post::findOrFail($id);
+
+        return view('post.show', compact($post));
     }
 
     /**
@@ -58,7 +65,8 @@ class PostController extends Controller
      */
     public function edit($id)
     {
-        //
+        $post = Post::findOrFail($id);
+        return view('post.edit', compact($post));
     }
 
     /**
@@ -70,7 +78,10 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $post = Post::findOrFail($id);
+        $post->update($request->all());
+
+        return redirect('posts');
     }
 
     /**

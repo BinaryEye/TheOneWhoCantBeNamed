@@ -7,11 +7,11 @@
     "require": {
         "php": ">=5.5.9",
         "laravel/framework": "5.1.*",
-<<<<<<< HEAD
-        "illuminate/html": "^5.0"
-=======
-        "doctrine/dbal": "^2.5"
->>>>>>> 92a0422ade3e271e455d93b92fb3e82a20fbdc66
+
+        "illuminate/html": "~5.0",
+
+        "doctrine/dbal": "~2.5"
+
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",
