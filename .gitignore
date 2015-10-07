@@ -2,5 +2,7 @@
 .env.*.php
 .env.php
 .env
+composer.lock
 /vendor
 /.idea
+/config/database.php

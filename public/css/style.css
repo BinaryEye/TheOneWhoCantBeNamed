@@ -1,11 +1,17 @@
 
-#dropMenu{
+#dropMenu,#dropMenu1{
     position: relative;
     width:950px;
 }
 #Years{
     position: absolute;
     top:0;
+    left: 325px;
+}
+
+#Sex{
+    position: absolute;
+    top: 0;
     left: 325px;
 }
 

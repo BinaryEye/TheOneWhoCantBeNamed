@@ -4,13 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-<<<<<<< HEAD
-    "hash": "555624ccbb615b66320a8a1a1f8d3fd4",
-    "content-hash": "46731a74b7ac6fc6544505c661be42c9",
-=======
-    "hash": "d1ca60e81e0d67a84bff9586a9082083",
-    "content-hash": "6b204a4ea457799c5a02fafc30becbcc",
->>>>>>> 92a0422ade3e271e455d93b92fb3e82a20fbdc66
+    "hash": "59b81a636f6d1d19329befd7ffe05ffc",
+    "content-hash": "29d9f055fd3848bcd057afa478222be1",
     "packages": [
         {
             "name": "classpreloader/classpreloader",
@@ -571,26 +566,6 @@
             "time": "2014-12-20 21:24:13"
         },
         {
-<<<<<<< HEAD
-            "name": "illuminate/html",
-            "version": "v5.0.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/illuminate/html.git",
-                "reference": "3d1009bb8e0f25720c914af5c1f4015dd373c9ef"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/illuminate/html/zipball/3d1009bb8e0f25720c914af5c1f4015dd373c9ef",
-                "reference": "3d1009bb8e0f25720c914af5c1f4015dd373c9ef",
-                "shasum": ""
-            },
-            "require": {
-                "illuminate/http": "~5.0",
-                "illuminate/session": "~5.0",
-                "illuminate/support": "~5.0",
-                "php": ">=5.4.0"
-=======
             "name": "doctrine/lexer",
             "version": "v1.0.1",
             "source": {
@@ -606,23 +581,10 @@
             },
             "require": {
                 "php": ">=5.3.2"
->>>>>>> 92a0422ade3e271e455d93b92fb3e82a20fbdc66
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-<<<<<<< HEAD
-                    "dev-master": "5.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Illuminate\\Html\\": ""
-                },
-                "files": [
-                    "helpers.php"
-                ]
-=======
                     "dev-master": "1.0.x-dev"
                 }
             },
@@ -630,7 +592,6 @@
                 "psr-0": {
                     "Doctrine\\Common\\Lexer\\": "lib/"
                 }
->>>>>>> 92a0422ade3e271e455d93b92fb3e82a20fbdc66
             },
             "notification-url": "https://packagist.org/downloads/",
             "license": [
@@ -638,13 +599,6 @@
             ],
             "authors": [
                 {
-<<<<<<< HEAD
-                    "name": "Taylor Otwell",
-                    "email": "taylorotwell@gmail.com"
-                }
-            ],
-            "time": "2015-01-01 16:31:18"
-=======
                     "name": "Roman Borschel",
                     "email": "roman@code-factory.org"
                 },
@@ -664,7 +618,52 @@
                 "parser"
             ],
             "time": "2014-09-09 13:34:57"
->>>>>>> 92a0422ade3e271e455d93b92fb3e82a20fbdc66
+        },
+        {
+            "name": "illuminate/html",
+            "version": "v5.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/illuminate/html.git",
+                "reference": "3d1009bb8e0f25720c914af5c1f4015dd373c9ef"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/illuminate/html/zipball/3d1009bb8e0f25720c914af5c1f4015dd373c9ef",
+                "reference": "3d1009bb8e0f25720c914af5c1f4015dd373c9ef",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/http": "~5.0",
+                "illuminate/session": "~5.0",
+                "illuminate/support": "~5.0",
+                "php": ">=5.4.0"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "5.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Illuminate\\Html\\": ""
+                },
+                "files": [
+                    "helpers.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taylor Otwell",
+                    "email": "taylorotwell@gmail.com"
+                }
+            ],
+            "time": "2015-01-01 16:31:18"
         },
         {
             "name": "jakub-onderka/php-console-color",

@@ -20,6 +20,7 @@ class AddUsersTable extends Migration
             $table->string('password', 60);
             $table->boolean('sex');
             $table->date('date_of_birth');
+            $table->rememberToken();
             $table->timestamps();
         });
     }
