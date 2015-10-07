@@ -4,13 +4,53 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Auth;
-use Hash;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use Response;
-use Validator;
 
 class UserController extends Controller
 {
-    
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        redirect('auth/register');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function show()
+    {
+        return view('users.show', Auth::user()->toArray());
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param User $user
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(User $user)
+    {
+        return view('users.edit', compact('user'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param User $user
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     * @internal param int $id
+     */
+    public function update(User $user, Request $request)
+    {
+        $user->update($request->all());
+        return redirect('users.show');
+    }
 }
