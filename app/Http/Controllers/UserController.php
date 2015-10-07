@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use Auth;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 
@@ -26,7 +27,8 @@ class UserController extends Controller
      */
     public function show()
     {
-        return view('users.show', Auth::user()->toArray());
+        $age = Carbon::now() - Carbon::parse(Auth::user()->getAttributeValue('date_of_birth'));
+        return view('users.show', [Auth::user()->toArray(), 'age' => $age]);
     }
 
     /**
