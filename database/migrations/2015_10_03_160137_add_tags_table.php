@@ -34,6 +34,21 @@ class AddTagsTable extends Migration
                 ->on('tags')
                 ->onDelete('cascade');
         });
+
+        Schema::create('tag_user', function (Blueprint $table) {
+            $table->integer('user_id')->unsigned();
+            $table->integer('tag_id')->unsigned();
+            $table->timestamps();
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
+
+            $table->foreign('tag_id')
+                ->references('id')
+                ->on('tags')
+                ->onDelete('cascade');
+        });
     }
 
     /**
@@ -45,5 +60,6 @@ class AddTagsTable extends Migration
     {
         Schema::drop('tags');
         Schema::drop('post_tag');
+        Schema::drop('tag_user');
     }
 }
