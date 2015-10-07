@@ -19,6 +19,21 @@ class AddTagsTable extends Migration
             $table->timestamps();
 
         });
+
+        Schema::create('post_tag', function (Blueprint $table) {
+            $table->integer('post_id')->unsigned();
+            $table->integer('tag_id')->unsigned();
+            $table->timestamps();
+            $table->foreign('post_id')
+                ->references('id')
+                ->on('posts')
+                ->onDelete('cascade');
+
+            $table->foreign('tag_id')
+                ->references('id')
+                ->on('tags')
+                ->onDelete('cascade');
+        });
     }
 
     /**
@@ -29,5 +44,6 @@ class AddTagsTable extends Migration
     public function down()
     {
         Schema::drop('tags');
+        Schema::drop('post_tag');
     }
 }

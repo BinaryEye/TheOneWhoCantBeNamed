@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddCommentVotesTable extends Migration
+class AddCommentVoteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class AddCommentVotesTable extends Migration
      */
     public function up()
     {
-        Schema::create('comment_votes', function (Blueprint $table) {
+        Schema::create('comment_vote', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('comment_id')->unsigned();
             $table->boolean('up');

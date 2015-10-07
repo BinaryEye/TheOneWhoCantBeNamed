@@ -20,4 +20,4 @@ Route::controllers([
     'password' => 'Auth\PasswordController'
 ]);
 
-Route::resource('posts', 'PostController');
+Route::resource('users', 'UserController');

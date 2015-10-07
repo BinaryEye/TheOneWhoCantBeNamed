@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddPostTagsTable extends Migration
+class AddPostVoteTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,20 +12,21 @@ class AddPostTagsTable extends Migration
      */
     public function up()
     {
-        Schema::create('post_tags', function (Blueprint $table) {
+        Schema::create('post_vote', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('post_id')->unsigned();
-            $table->integer('tag_id')->unsigned();
+            $table->boolean('up');
+            $table->integer('user_id')->unsigned();
             $table->timestamps();
+
+            $table->foreign('user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('cascade');
 
             $table->foreign('post_id')
                 ->references('id')
                 ->on('posts')
-                ->onDelete('cascade');
-
-            $table->foreign('tag_id')
-                ->references('id')
-                ->on('tags')
                 ->onDelete('cascade');
         });
     }
@@ -37,6 +38,6 @@ class AddPostTagsTable extends Migration
      */
     public function down()
     {
-        Schema::drop('post_tags');
+        Schema::drop('post_votes');
     }
 }
