@@ -54,4 +54,8 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
     {
         return $this->hasOne('App\Admin');
     }
+
+    public function tag(){
+        return $this->belongsToMany('App\Tag');
+    }
 }
