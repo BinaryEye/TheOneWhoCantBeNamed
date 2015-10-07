@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -10,15 +11,10 @@ use Illuminate\Support\Facades\Auth;
 
 class PostController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-
+    public function _construct(){
+        $this->middleware('auth', ['only' => 'create', 'edit']);
     }
+
 
     /**
      * Show the form for creating a new resource.
@@ -36,12 +32,12 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Requests\PostRequest $request)
+    public function store(PostRequest $request)
     {
         $post = new Post($request->all());
         Auth::user()->posts()->save($post);
 
-        return redirect('posts');
+        return view('posts.show', compact($post));
     }
 
     /**
@@ -54,7 +50,7 @@ class PostController extends Controller
     {
         $post = Post::findOrFail($id);
 
-        return view('post.show', compact($post));
+        return view('posts.show', compact($post));
     }
 
     /**
@@ -63,10 +59,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        $post = Post::findOrFail($id);
-        return view('post.edit', compact($post));
+        return view('posts.edit', compact($post));
     }
 
     /**
@@ -76,12 +71,11 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, Post $post)
     {
-        $post = Post::findOrFail($id);
         $post->update($request->all());
 
-        return redirect('posts');
+        return redirect('posts.show');
     }
 
     /**
