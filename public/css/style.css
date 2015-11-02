@@ -64,3 +64,8 @@ body {
     width: 200px;
     white-space: nowrap;
 }
+
+.info-group{
+    padding-bottom: 40px;
+    font-size: 130%;
+}

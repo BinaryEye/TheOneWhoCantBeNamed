@@ -43,9 +43,10 @@
                     <li><a href="{{ url('/auth/register') }}">Register</a></li>
                 @else
                     <li class="dropdown name">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ Auth::user()->first_name . " " . Auth::user()->last_name}} <span class="caret"></span></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">{{ ucfirst(Auth::user()->first_name) . " " . ucfirst(Auth::user()->last_name)}} <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+                            <li><a href="{{ url('/users/show') }}">My Info</a></li>
                         </ul>
                     </li>
                 @endif
