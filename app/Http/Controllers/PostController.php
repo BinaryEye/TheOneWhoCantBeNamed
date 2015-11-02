@@ -4,17 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\PostRequest;
 use App\Post;
-use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Http\Controllers\Controller;
-use Illuminate\Support\Facades\Auth;
+use Auth;
+use Request;
+use Response;
+use Validator;
 
 class PostController extends Controller
 {
-    public function _construct(){
-        $this->middleware('auth', ['only' => 'create', 'edit']);
-    }
+    private $post;
 
+    /**
+     * @param Post $post
+     */
+    public function _construct(Post $post){
+        $this->middleware('auth', ['only' => 'create', 'edit']);
+        $this->$post = $post;
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -29,14 +35,18 @@ class PostController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(Request $request)
     {
-        $post = new Post($request->all());
-        Auth::user()->posts()->save($post);
-
+        $validator = Validator::make($request->all(),[
+            'body' => 'required',
+        ]);
+        if($validator->fails()){
+            return Response::make($validator->messages(), 400);
+        }
+        $post = Auth::user()->posts()->create($request->all());
         return view('posts.show', compact($post));
     }
 
@@ -48,16 +58,16 @@ class PostController extends Controller
      */
     public function show($id)
     {
-        $post = Post::findOrFail($id);
-
+        $post = Auth::user()->posts()->findOrFail($id);
         return view('posts.show', compact($post));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Post $post
+     * @internal param int $id
+     * @return \Illuminate\View\View
      */
     public function edit(Post $post)
     {
@@ -67,25 +77,32 @@ class PostController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param Request $request
+     * @param Post $post
      * @return \Illuminate\Http\Response
+     * @internal param int $id
      */
-    public function update(PostRequest $request, Post $post)
+    public function update(Request $request, Post $post)
     {
+        if ($post->user()->getResults() != Auth::user()) {
+            return response('Unauthorized.', 401);
+        }
         $post->update($request->all());
-
         return redirect('posts.show');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param Post $post
      * @return \Illuminate\Http\Response
+     * @throws \Exception
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+        if ($post->user()->getResults() != Auth::user()) {
+            return response('Unauthorized.', 401);
+        }
+            return redirect('posts.show');
     }
 }
