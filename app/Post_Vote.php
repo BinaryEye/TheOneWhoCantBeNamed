@@ -10,7 +10,7 @@ class Post_Vote extends Model
         'up'
     ];
 
-    protected $table = 'post_votes';
+    protected $table = 'post_vote';
 
     protected function post()
     {
