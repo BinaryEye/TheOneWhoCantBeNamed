@@ -31,8 +31,7 @@ class UserController extends Controller
      */
     public function show()
     {
-        $age = Carbon::now() - Carbon::parse(Auth::user()->getAttributeValue('date_of_birth'));
-        return view('users.show', [Auth::user()->toArray(), 'age' => $age]);
+        return view('users.show');
     }
 
     /**
