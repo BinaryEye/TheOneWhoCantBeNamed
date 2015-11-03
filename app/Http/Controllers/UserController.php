@@ -6,7 +6,6 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 use Response;
 
 class UserController extends Controller
@@ -49,14 +48,22 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param User $user
-     * @param  \Illuminate\Http\Request $request
+     * @param Request $request
      * @return Response
+     * @internal param User $user
      * @internal param int $id
      */
-    public function update(User $user, Request $request)
+    public function update(Request $request)
+
     {
-        $user->update($request->all());
-        return redirect('users.show');
+        $this->validate($request,[
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'sex' => 'required',
+            'date_of_birth' => 'required'
+        ]);
+        Auth::user()->update($request->except('date_of_birth'));
+        Auth::user()->update([Carbon::parse($request->get('date_of_birth'))]);
+        return redirect(url('/users/show'))->with('message',"Successfully updated Your info.");
     }
 }

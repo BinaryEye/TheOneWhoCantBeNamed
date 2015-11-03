@@ -72,6 +72,10 @@
                                 </div>
                              </div>
 
+                            <br/>
+                            <br/>
+                            <br/>
+
 
                             <div class="form-group " id="dropMenu">
                                 <label class="col-md-4 control-label">Date Of Birth</label>
@@ -122,7 +126,7 @@
 
 
 
-                            <div class="form-group">
+                            <div class="form-group" style="padding-top: 100px;">
                                 <div class="col-md-6 col-md-offset-4">
                                     <button type="submit" class="btn btn-primary">
                                         Register

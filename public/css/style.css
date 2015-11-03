@@ -69,3 +69,23 @@ body {
     padding-bottom: 40px;
     font-size: 130%;
 }
+.posts{
+    height: 150px;
+    width: 90%;
+    margin: 25px auto;
+}
+[type="submit"]{
+    width: 120px;
+    height:40px;
+}
+.linkbutton{
+    margin: 10px 0 0 10px;
+    width: 120px;
+    height: 40px;
+}
+.dropdown-menu{
+    max-height:130px;
+    _height:expression(this.scrollHeight>max-height?"250px":"auto");
+    overflow:auto;
+    overflow-x:hidden;
+}

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Auth\Authenticatable;
 use Illuminate\Auth\Passwords\CanResetPassword;
@@ -53,6 +54,11 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
     public function admin()
     {
         return $this->hasOne('App\Admin');
+    }
+
+    public function add_vote_to_post(Post $post, Post_Vote $vote){
+        $this->post_vote()->save($vote);
+        $post->votes()->save($vote);
     }
 
     public function tag(){
