@@ -56,7 +56,7 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
         return $this->hasOne('App\Admin');
     }
 
-    public function add_vote_to_post(Post_Vote $vote, Post $post){
+    public function add_vote_to_post(Post $post, Post_Vote $vote){
         $this->post_vote()->save($vote);
         $post->votes()->save($vote);
     }

@@ -30,6 +30,7 @@ class UserController extends Controller
      */
     public function show()
     {
+        User::add_vote_to_post();
         return view('users.show');
     }
 
