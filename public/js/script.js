@@ -8,6 +8,9 @@ $("document").ready(function(){
         var year = $("#YearButton").text();
         var month = $("#MonthButton").text();
         var day = $("#DayButton").text();
+        if(day.length == 1){
+            day = "0" + day;
+        }
         var date = year +"-"+month+"-"+ day;
         $("input[name='date_of_birth']").val(date);
         if($("#SexButton").text() == "Male"){
@@ -20,5 +23,6 @@ $("document").ready(function(){
 
 
     });
+
 
 });

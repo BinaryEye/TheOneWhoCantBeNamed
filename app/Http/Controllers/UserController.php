@@ -6,7 +6,6 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
-use App\Http\Requests;
 
 class UserController extends Controller
 {
@@ -54,8 +53,18 @@ class UserController extends Controller
      * @internal param int $id
      */
     public function update(User $user, Request $request)
+
     {
-        $user->update($request->all());
-        return redirect('users.show');
+        $this->validate($request,[
+            'first_name' => 'required|max:255',
+            'last_name' => 'required|max:255',
+            'sex' => 'required',
+            'date_of_birth' => 'required'
+        ]);
+        //dd($request->date_of_birth);
+        $user->update(['first_name' => $request->first_name, 'last_name' => $request->last_name,
+            'sex' => $request->sex, 'date_of_birth' => $request->date_of_birth]);
+        return redirect(url('/users/show'))->with('message',"Successfully updated Your info.");
     }
 }
+//{!!Form::open(['method' => 'PATCH', 'class' => 'form-horizontal' , 'role' => 'form', 'action' => ['UserController@update',Auth::user()->id]]) !!}
