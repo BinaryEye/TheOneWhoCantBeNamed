@@ -6,6 +6,7 @@ use App\User;
 use Auth;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Response;
 
 class UserController extends Controller
 {
@@ -16,7 +17,7 @@ class UserController extends Controller
     /**
      * Show the form for creating a new resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function create()
     {
@@ -26,7 +27,7 @@ class UserController extends Controller
     /**
      * Display the specified resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show()
     {
@@ -37,7 +38,7 @@ class UserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param User $user
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function edit(User $user)
     {
@@ -47,9 +48,9 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param User $user
-     * @param  \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return Response
+     * @internal param User $user
      * @internal param int $id
      */
     public function update(Request $request)
@@ -61,9 +62,8 @@ class UserController extends Controller
             'sex' => 'required',
             'date_of_birth' => 'required'
         ]);
-        Auth::user()->update(['first_name' => $request->first_name, 'last_name' => $request->last_name,
-            'sex' => $request->sex, 'date_of_birth' => Carbon::parse($request->date_of_birth)]);
+        Auth::user()->update($request->except('date_of_birth'));
+        Auth::user()->update([Carbon::parse($request->get('date_of_birth'))]);
         return redirect(url('/users/show'))->with('message',"Successfully updated Your info.");
     }
 }
-//{!!Form::open(['method' => 'PATCH', 'class' => 'form-horizontal' , 'role' => 'form', 'action' => ['UserController@update',Auth::user()->id]]) !!}
