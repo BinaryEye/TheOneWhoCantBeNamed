@@ -52,7 +52,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      * @internal param int $id
      */
-    public function update(User $user, Request $request)
+    public function update(Request $request)
 
     {
         $this->validate($request,[
@@ -61,9 +61,8 @@ class UserController extends Controller
             'sex' => 'required',
             'date_of_birth' => 'required'
         ]);
-        //dd($request->date_of_birth);
-        $user->update(['first_name' => $request->first_name, 'last_name' => $request->last_name,
-            'sex' => $request->sex, 'date_of_birth' => $request->date_of_birth]);
+        Auth::user()->update(['first_name' => $request->first_name, 'last_name' => $request->last_name,
+            'sex' => $request->sex, 'date_of_birth' => Carbon::parse($request->date_of_birth)]);
         return redirect(url('/users/show'))->with('message',"Successfully updated Your info.");
     }
 }
