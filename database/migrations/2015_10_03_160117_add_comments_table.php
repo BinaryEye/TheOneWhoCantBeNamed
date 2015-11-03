@@ -16,7 +16,7 @@ class AddCommentsTable extends Migration
             $table->increments('id');
             $table->text('body');
             $table->integer('vote_count');
-            $table->integer('parent_id')->unsigned();
+            $table->integer('parent_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 
@@ -24,6 +24,7 @@ class AddCommentsTable extends Migration
                 ->references('id')
                 ->on('users')
                 ->onDelete('cascade');
+
             $table->foreign('parent_id')
                 ->references('id')
                 ->on('comments')

@@ -10,7 +10,7 @@ class Comment_Vote extends Model
         'up'
     ];
 
-    protected $table = 'comment_votes';
+    protected $table = 'comment_vote';
 
     protected function comment()
     {

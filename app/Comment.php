@@ -12,7 +12,7 @@ class Comment extends Model
         'vote_count'
     ];
 
-    protected $table = 'posts';
+    protected $table = 'comments';
 
     public function user()
     {
