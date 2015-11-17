@@ -104,4 +104,9 @@ class PostController extends Controller
         }
             return view('posts.show', compact($post->delete()));
     }
+
+    public function getComments(Post $post)
+    {
+        //
+    }
 }
