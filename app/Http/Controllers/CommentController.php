@@ -11,6 +11,15 @@ use Response;
 
 class CommentController extends Controller
 {
+    private $comment;
+
+    public function _construct(Comment $comment)
+    {
+        $this->$comment = $comment;
+        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy']);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -80,7 +89,7 @@ class CommentController extends Controller
     }
 
     /**
-     * Remove the specified resource from storage.
+       * Remove the specified resource from storage.
      *
      * @param Comment $comment
      * @return \Illuminate\Http\Response
