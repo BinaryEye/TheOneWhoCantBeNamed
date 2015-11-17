@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostRequest;
 use App\Post;
 use App\Http\Requests;
 use Auth;
@@ -18,7 +17,7 @@ class PostController extends Controller
      * @param Post $post
      */
     public function _construct(Post $post){
-        $this->middleware('auth', ['only' => 'create', 'edit']);
+        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy']);
         $this->$post = $post;
     }
 
@@ -103,6 +102,7 @@ class PostController extends Controller
         if ($post->user()->getResults() != Auth::user()) {
             return response('Unauthorized.', 401);
         }
-            return redirect('posts.show');
+            $booleanDeleted = Auth::user()->posts()->findOrFail($post)->delete();
+            return view('posts.show', compact($booleanDeleted));
     }
 }

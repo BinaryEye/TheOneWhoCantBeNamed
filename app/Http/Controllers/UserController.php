@@ -12,7 +12,7 @@ class UserController extends Controller
 {
 
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware('auth', ['except' => ['create']]);
     }
     /**
      * Show the form for creating a new resource.
