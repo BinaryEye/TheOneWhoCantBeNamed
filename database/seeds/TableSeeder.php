@@ -27,6 +27,7 @@ class TableSeeder extends Seeder
                 'first_name' => $faker->name,
                 'last_name' => $faker->name,
                 'password' => Hash::make('123456'),
+                'type' => false,
                 'sex' => $faker->boolean(),
                 'email' => $faker->email,
                 'date_of_birth' => $faker->date('Y-m-d')

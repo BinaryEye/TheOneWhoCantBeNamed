@@ -18,6 +18,7 @@ class AddUsersTable extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('password', 60);
+            $table->boolean('type');
             $table->boolean('sex');
             $table->date('date_of_birth');
             $table->rememberToken();
