@@ -102,7 +102,6 @@ class PostController extends Controller
         if ($post->user()->getResults() != Auth::user()) {
             return response('Unauthorized.', 401);
         }
-            $booleanDeleted = Auth::user()->posts()->findOrFail($post)->delete();
-            return view('posts.show', compact($booleanDeleted));
+            return view('posts.show', compact($post->delete()));
     }
 }
