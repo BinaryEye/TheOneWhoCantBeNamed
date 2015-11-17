@@ -26,6 +26,7 @@ class TableSeeder extends Seeder
             User::create([
                 'first_name' => $faker->name,
                 'last_name' => $faker->name,
+                'password' => Hash::make('123456'),
                 'sex' => $faker->boolean(),
                 'email' => $faker->email,
                 'date_of_birth' => $faker->date('Y-m-d')
@@ -55,6 +56,7 @@ class TableSeeder extends Seeder
             Comment::create([
                 'user_id' => $faker->randomElement($users),
                 'parent_id' => $faker->randomElement(Comment::all()->lists('id')->toArray()),
+                'post_id' => $faker->randomElement($posts),
                 'body' => $faker->text,
                 'vote_count' => 0
             ]);

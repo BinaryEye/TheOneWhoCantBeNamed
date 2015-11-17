@@ -17,6 +17,7 @@ class AddCommentsTable extends Migration
             $table->text('body');
             $table->integer('vote_count')->default(0);
             $table->integer('parent_id')->unsigned()->nullable();
+            $table->integer('post_id')->unsigned()->nullable();
             $table->integer('user_id')->unsigned();
             $table->timestamps();
 

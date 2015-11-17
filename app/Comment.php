@@ -29,6 +29,11 @@ class Comment extends Model
         return $this->hasMany('App\Comment');
     }
 
+    public function post()
+    {
+        return $this->belongsTo('App\Post');
+    }
+
     public function votes()
     {
         return $this->hasMany('App\Comment_Vote');
