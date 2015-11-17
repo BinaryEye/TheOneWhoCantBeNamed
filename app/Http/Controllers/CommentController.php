@@ -72,7 +72,11 @@ class CommentController extends Controller
      */
     public function update(Request $request, Comment $comment)
     {
-
+        if ($comment->user()->getResults() != Auth::user()) {
+            return response('Unauthorized.', 401);
+        }
+        $comment->update($request->all());
+        return redirect('comments.show');
     }
 
     /**
@@ -83,6 +87,9 @@ class CommentController extends Controller
      */
     public function destroy(Comment $comment)
     {
-        //
+        if ($comment->user()->getResults() != Auth::user()) {
+            return response('Unauthorized.', 401);
+        }
+        return view('posts.show', compact($comment->delete()));
     }
 }
