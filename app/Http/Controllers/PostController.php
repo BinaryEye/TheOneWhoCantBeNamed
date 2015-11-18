@@ -7,6 +7,7 @@ use App\Tag;
 use Illuminate\Html\FormFacade;
 use Illuminate\Http\Request;
 use App\Http\Requests;
+use App\Post_Vote;
 use Auth;
 //use Request;
 use Response;
@@ -17,7 +18,7 @@ class PostController extends Controller
     private $post;
 
     public function _construct(Post $post){
-        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy']);
+        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy', 'upVote']);
         $this->$post = $post;
     }
 
@@ -78,5 +79,31 @@ class PostController extends Controller
     public function getComments(Post $post)
     {
         //
+    }
+
+    public function upVote(Post $post)
+    {
+        $voteCount = $post->getAttributeValue('vote_count') + 1;
+        $post->update([
+            'vote_count' => $voteCount
+        ]);
+        Auth::user()->post_vote()->create([
+            'up' => true,
+            'post_id' => $post->getAttributeValue('id')
+        ]);
+        return view('posts.show', compact($post));
+    }
+
+    public function downVote(Post $post)
+    {
+        $voteCount = $post->getAttributeValue('vote_count') - 1;
+        $post->update([
+            'vote_count' => $voteCount
+        ]);
+        Auth::user()->post_vote()->create([
+            'up' => true,
+            'post_id' => $post->getAttributeValue('id')
+        ]);
+        return view('posts.show', compact($post));
     }
 }
