@@ -7,7 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 class Post_Vote extends Model
 {
     protected $fillable = [
-        'up'
+        'up',
+        'post_id'
     ];
 
     protected $table = 'post_vote';
