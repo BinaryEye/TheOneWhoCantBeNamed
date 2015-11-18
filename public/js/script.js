@@ -23,6 +23,9 @@ $("document").ready(function(){
 
 
     });
+    $("#tag_list").select2({
+        placeholder: "Choose tags for your post"
+    });
 
 
 });

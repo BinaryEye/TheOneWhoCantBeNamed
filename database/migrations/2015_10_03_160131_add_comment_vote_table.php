@@ -38,6 +38,6 @@ class AddCommentVoteTable extends Migration
      */
     public function down()
     {
-        Schema::drop('comment_votes');
+        Schema::drop('comment_vote');
     }
 }

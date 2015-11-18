@@ -3,40 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Tag;
+use Illuminate\Html\FormFacade;
+use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
-use Request;
+//use Request;
 use Response;
 use Validator;
 
 class PostController extends Controller
 {
     private $post;
-
-    /**
-     * @param Post $post
-     */
+    
     public function _construct(Post $post){
         $this->middleware('auth', ['only' => 'create', 'edit', 'destroy']);
         $this->$post = $post;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
-        return view('posts.create');
+        $tags = Tag::lists('name', 'id');
+        return view('posts.create', compact('tags'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param Request $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -45,58 +35,38 @@ class PostController extends Controller
         if($validator->fails()){
             return Response::make($validator->messages(), 400);
         }
-        $post = Auth::user()->posts()->create($request->all());
+        //$post = Auth::user()->posts()->create($request->all());
+        $post = new Post($request->all());
+        Auth::user()->posts()->save($post);
+        $post->tags()->attach($request->input('tags'));
         return view('posts.show', compact($post));
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function show($post)
     {
-        $post = Auth::user()->posts()->findOrFail($id);
-        return view('posts.show', compact($post));
+        return view('posts.show', compact('post'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param Post $post
-     * @internal param int $id
-     * @return \Illuminate\View\View
-     */
     public function edit(Post $post)
     {
-        return view('posts.edit', compact($post));
+        $tags = Tag::lists('name', 'id');
+        $selected_tags = $post->tags()->get()->lists('id')->toArray();
+        return view('posts.edit', compact('post','selected_tags','tags'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param Request $request
-     * @param Post $post
-     * @return \Illuminate\Http\Response
-     * @internal param int $id
-     */
     public function update(Request $request, Post $post)
     {
         if ($post->user()->getResults() != Auth::user()) {
             return response('Unauthorized.', 401);
         }
         $post->update($request->all());
-        return redirect('posts.show');
+        $post->tags()->detach();
+        $post->tags()->attach($request->input('tags'));
+        return view('posts.show',compact($post));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param Post $post
-     * @return \Illuminate\Http\Response
-     * @throws \Exception
-     */
+
     public function destroy(Post $post)
     {
         if ($post->user()->getResults() != Auth::user()) {
