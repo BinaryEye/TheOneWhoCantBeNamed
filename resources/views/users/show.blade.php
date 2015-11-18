@@ -5,7 +5,7 @@
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
                     @if (session('message'))
-                        <div class="alert alert-success"">
+                        <div class="alert alert-success">
                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                             <h3>{{session("message")}}</h3>
                         </div>

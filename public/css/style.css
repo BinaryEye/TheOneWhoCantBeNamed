@@ -69,10 +69,10 @@ body {
     padding-bottom: 40px;
     font-size: 130%;
 }
-.posts{
+.form-control.input-sm.posts{
+    margin: 25px auto;
     height: 150px;
     width: 90%;
-    margin: 25px auto;
 }
 [type="submit"]{
     width: 120px;
@@ -88,4 +88,26 @@ body {
     _height:expression(this.scrollHeight>max-height?"250px":"auto");
     overflow:auto;
     overflow-x:hidden;
+}
+.tags{
+    margin-left: 45px;
+    width:90%;
+}
+.select2-container ,.select2-choice, .select2-result-label {
+    height: 35px;
+}
+
+.select2-arrow, .select2-chosen {
+    padding-top: 6px;
+}
+.col-md-1.posts{
+    width: 900px;
+    display: inline;
+    padding: 30px;
+}
+.list-group.tags a{
+    width: 170px;
+    text-align: center;
+    display: inline-block;
+    margin: 15px 30px;
 }

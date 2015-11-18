@@ -38,6 +38,6 @@ class AddPostVoteTable extends Migration
      */
     public function down()
     {
-        Schema::drop('post_votes');
+        Schema::drop('post_vote');
     }
 }
