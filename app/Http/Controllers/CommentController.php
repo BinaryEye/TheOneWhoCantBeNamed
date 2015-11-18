@@ -16,7 +16,7 @@ class CommentController extends Controller
     public function _construct(Comment $comment)
     {
         $this->$comment = $comment;
-        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy']);
+        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy', 'upVote', 'downVote']);
     }
 
 
@@ -100,5 +100,31 @@ class CommentController extends Controller
             return response('Unauthorized.', 401);
         }
         return view('posts.show', compact($comment->delete()));
+    }
+
+    public function upVote(Comment $comment)
+    {
+        $voteCount = $comment->getAttributeValue('vote_count') + 1;
+        $comment->update([
+            'vote_count' => $voteCount
+        ]);
+        Auth::user()->post_vote()->create([
+            'up' => true,
+            'post_id' => $comment->getAttributeValue('id')
+        ]);
+        return view('posts.show', compact($comment));
+    }
+
+    public function downVote(Comment $comment)
+    {
+        $voteCount = $comment->getAttributeValue('vote_count') - 1;
+        $comment->update([
+            'vote_count' => $voteCount
+        ]);
+        Auth::user()->post_vote()->create([
+            'up' => true,
+            'post_id' => $comment->getAttributeValue('id')
+        ]);
+        return view('posts.show', compact($comment));
     }
 }
