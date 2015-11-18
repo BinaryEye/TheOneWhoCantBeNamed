@@ -18,7 +18,7 @@ class PostController extends Controller
      * @param Post $post
      */
     public function _construct(Post $post){
-        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy', 'upVote']);
+        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy', 'upVote', 'downVote']);
         $this->$post = $post;
     }
 
