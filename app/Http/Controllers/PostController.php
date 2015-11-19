@@ -33,6 +33,8 @@ class PostController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'body' => 'required',
+            'private' => 'required',
+            'title' => 'required'
         ]);
         if($validator->fails()){
             return Response::make($validator->messages(), 400);
