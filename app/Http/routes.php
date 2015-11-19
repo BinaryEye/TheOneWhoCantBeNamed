@@ -16,10 +16,12 @@ Route::get('/', function () {
 });
 
 Route::controllers([
-    'auth' =>'Auth\AuthController',
+    'auth' => 'Auth\AuthController',
     'password' => 'Auth\PasswordController'
 ]);
 
 Route::resource('users', 'UserController');
 
 Route::resource('posts', 'PostController');
+Route::get("posts/upvote/{posts}", ['as' => 'upvote', 'uses' => 'PostController@upVote']);
+Route::get("posts/downvote/{posts}", ['as' => 'downvote', 'uses' => 'PostController@downVote']);

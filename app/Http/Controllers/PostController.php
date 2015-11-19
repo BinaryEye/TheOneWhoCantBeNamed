@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Post;
 use App\Tag;
 use Illuminate\Html\FormFacade;
+use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Post_Vote;
@@ -91,7 +92,7 @@ class PostController extends Controller
             'up' => true,
             'post_id' => $post->getAttributeValue('id')
         ]);
-        return view('posts.show', compact($post));
+        return view('posts.show', compact('post'));
     }
 
     public function downVote(Post $post)
@@ -101,9 +102,9 @@ class PostController extends Controller
             'vote_count' => $voteCount
         ]);
         Auth::user()->post_vote()->create([
-            'up' => true,
+            'up' => false,
             'post_id' => $post->getAttributeValue('id')
         ]);
-        return view('posts.show', compact($post));
+        return view('posts.show', compact('post'));
     }
 }

@@ -111,3 +111,11 @@ body {
     display: inline-block;
     margin: 15px 30px;
 }
+.votes{
+    padding: 30px 300px;
+}
+.votes a{
+    display: inline-block;
+    text-align: center;
+    margin: 20px 5px;
+}

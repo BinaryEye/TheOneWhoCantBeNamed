@@ -31,4 +31,11 @@ class Post extends Model
     {
         return $this->belongsToMany('App\Tag');
     }
+
+    public function upVotes(){
+        return Post_Vote::where(['up' => 1, 'post_id' => $this->id])->count();
+    }
+    public function downVotes(){
+        return Post_Vote::where(['up' => 0, 'post_id' => $this->id])->count();
+    }
 }
