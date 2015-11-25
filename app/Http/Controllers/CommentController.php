@@ -21,7 +21,6 @@ class CommentController extends Controller
         $this->middleware('auth', ['only' => 'create', 'edit', 'destroy', 'upVote', 'downVote']);
     }
 
-
     /**
      * Show the form for creating a new resource.
      *
