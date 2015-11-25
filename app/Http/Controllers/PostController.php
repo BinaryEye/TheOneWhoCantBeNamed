@@ -3,10 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Post_Vote;
 use App\Tag;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
+use Mockery\CountValidator\Exception;
 use Response;
 use Validator;
 
@@ -79,30 +82,41 @@ class PostController extends Controller
     {
         //
     }
-
-    public function upVote(Post $post)
-    {
-        $voteCount = $post->getAttributeValue('vote_count') + 1;
-        $post->update([
-            'vote_count' => $voteCount
-        ]);
-        Auth::user()->post_vote()->create([
-            'up' => true,
-            'post_id' => $post->getAttributeValue('id')
-        ]);
-        return view('posts.show', compact('post'));
+    public function checkVotes(Post $post, $vote){
+        try{
+            $user_vote = Post_Vote::findOrFail([
+                'post_id' => $post->getAttribute('id'),
+                'user_id' => Auth::id()]);
+            if($user_vote->getAttributeValue('up') == $vote){
+                return view('posts.show', compact('post'));
+            }else{
+                vote($post, !$vote);
+            }
+        }catch (Exception $e){
+            vote($post, $vote);
+        }
     }
-
-    public function downVote(Post $post)
+    public function vote(Post $post, $vote)
     {
-        $voteCount = $post->getAttributeValue('vote_count') - 1;
-        $post->update([
-            'vote_count' => $voteCount
-        ]);
-        Auth::user()->post_vote()->create([
-            'up' => false,
-            'post_id' => $post->getAttributeValue('id')
-        ]);
+            if ($vote == true) {
+                $voteCount = $post->getAttributeValue('vote_count') + 1;
+                $post->update([
+                    'vote_count' => $voteCount
+                ]);
+                Auth::user()->post_vote()->create([
+                    'up' => true,
+                    'post_id' => $post->getAttributeValue('id')
+                ]);
+            }else {
+                $voteCount = $post->getAttributeValue('vote_count') - 1;
+                $post->update([
+                    'vote_count' => $voteCount
+                ]);
+                Auth::user()->post_vote()->create([
+                    'up' => false,
+                    'post_id' => $post->getAttributeValue('id')
+                ]);
+            }
         return view('posts.show', compact('post'));
     }
 }
