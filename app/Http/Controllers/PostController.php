@@ -4,13 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Post;
 use App\Tag;
-use Illuminate\Html\FormFacade;
-use Illuminate\Html\HtmlServiceProvider;
 use Illuminate\Http\Request;
 use App\Http\Requests;
-use App\Post_Vote;
 use Auth;
-//use Request;
 use Response;
 use Validator;
 
