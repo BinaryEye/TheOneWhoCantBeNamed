@@ -23,5 +23,7 @@ Route::controllers([
 Route::resource('users', 'UserController');
 
 Route::resource('posts', 'PostController');
-Route::get("posts/upvote/{posts}", ['as' => 'upvote', 'uses' => 'PostController@upVote']);
-Route::get("posts/downvote/{posts}", ['as' => 'downvote', 'uses' => 'PostController@downVote']);
+
+Route::get("posts/vote/{posts}", ['as' => 'checkVotes', 'uses' => 'PostController@checkVotes']);
+
+Route::get("comments/vote/{comments}", ['as' => 'checkVotes', 'uses' => 'CommentController@checkVotes']);
