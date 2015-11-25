@@ -87,9 +87,9 @@ class PostController extends Controller
         $vote = $request->only('vote');
         try{
             $user_vote = Post_Vote::findOrFail([
-                'post_id' => $post->getAttribute('id'),
+                'post_id' => $post->id,
                 'user_id' => Auth::id()]);
-            if($user_vote->getAttributeValue('up') == $vote){
+            if($user_vote->up == $vote){
                 return view('posts.show', compact('post'));
             }else{
                 vote($post, !$vote);
