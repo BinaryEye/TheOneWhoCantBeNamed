@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Post;
+use App\Post_Tag;
 use App\Tag_User;
 use App\User;
 use Auth;
@@ -73,5 +75,15 @@ class UserController extends Controller
             'user_id' => Auth::id(),
             'tag_id' => $tag_id
         ]);
+    }
+
+    public function timeline(){
+        $array = array();
+        foreach(Auth::user()->tag() as $tag){
+            foreach(Post_Tag::findOrFail(['tag_id' => $tag->id]) as $entry){
+                $post = Post::findOrFail(['id' => $entry->post_id]);
+                $array = array_add(['post'], $post, 0);
+            }
+        }
     }
 }
