@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
+use Mockery\CountValidator\Exception;
 use Response;
 use Validator;
 
@@ -81,16 +82,23 @@ class PostController extends Controller
     {
         //
     }
-
-    public function vote(Post $post, $vote)
-    {
+    public function checkVotes(Post $post, $vote){
         try{
-            Post_Vote::findOrFail([
+            $user_vote = Post_Vote::findOrFail([
                 'post_id' => $post->getAttribute('id'),
                 'user_id' => Auth::id()]);
-        }catch(ModelNotFoundException $e) {
-
-            if (vote > 0) {
+            if($user_vote->getAttributeValue('up') == $vote){
+                return view('posts.show', compact('post'));
+            }else{
+                vote($post, !$vote);
+            }
+        }catch (Exception $e){
+            vote($post, $vote);
+        }
+    }
+    public function vote(Post $post, $vote)
+    {
+            if ($vote == true) {
                 $voteCount = $post->getAttributeValue('vote_count') + 1;
                 $post->update([
                     'vote_count' => $voteCount
@@ -99,7 +107,7 @@ class PostController extends Controller
                     'up' => true,
                     'post_id' => $post->getAttributeValue('id')
                 ]);
-            }else{
+            }else {
                 $voteCount = $post->getAttributeValue('vote_count') - 1;
                 $post->update([
                     'vote_count' => $voteCount
@@ -109,7 +117,6 @@ class PostController extends Controller
                     'post_id' => $post->getAttributeValue('id')
                 ]);
             }
-        }
         return view('posts.show', compact('post'));
     }
 }
