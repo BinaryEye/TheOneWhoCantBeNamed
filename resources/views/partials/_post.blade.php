@@ -10,7 +10,7 @@
                         <br/>
 
                         <div class="votes">
-                            <a href="{{route('checkVotes',[$post])}}">
+                            <a href="{{route('checkPostVotes',[$post])}}">
                             <button type="button" class="btn btn-default btn-lg">
                                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">
                                     {{$post->upVotes()}}
@@ -18,7 +18,7 @@
                             </button>
                             </a>
 
-                            <a href="{{route('checkVotes',[$post])}}">
+                            <a href="{{route('checkPostVotes',[$post])}}">
                                 <button type="button" class="btn btn-default btn-lg">
                                     <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true">
                                         {{$post->downVotes()}}
