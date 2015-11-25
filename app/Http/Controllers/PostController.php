@@ -82,6 +82,7 @@ class PostController extends Controller
     {
         //
     }
+
     public function checkVotes(Post $post, $vote){
         try{
             $user_vote = Post_Vote::findOrFail([
@@ -96,27 +97,21 @@ class PostController extends Controller
             vote($post, $vote);
         }
     }
+
     public function vote(Post $post, $vote)
     {
             if ($vote == true) {
                 $voteCount = $post->getAttributeValue('vote_count') + 1;
-                $post->update([
-                    'vote_count' => $voteCount
-                ]);
-                Auth::user()->post_vote()->create([
-                    'up' => true,
-                    'post_id' => $post->getAttributeValue('id')
-                ]);
             }else {
                 $voteCount = $post->getAttributeValue('vote_count') - 1;
-                $post->update([
-                    'vote_count' => $voteCount
-                ]);
-                Auth::user()->post_vote()->create([
-                    'up' => false,
-                    'post_id' => $post->getAttributeValue('id')
-                ]);
             }
+            $post->update([
+                'vote_count' => $voteCount
+            ]);
+            Auth::user()->post_vote()->create([
+                'up' => $vote,
+                'post_id' => $post->getAttributeValue('id')
+            ]);
         return view('posts.show', compact('post'));
     }
 }

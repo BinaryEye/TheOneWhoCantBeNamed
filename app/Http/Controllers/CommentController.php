@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Comment;
+use App\Comment_Vote;
 use Auth;
 use Validator;
 use Illuminate\Http\Request;
@@ -102,29 +103,35 @@ class CommentController extends Controller
         return view('posts.show', compact($comment->delete()));
     }
 
-    public function upVote(Comment $comment)
-    {
-        $voteCount = $comment->getAttributeValue('vote_count') + 1;
-        $comment->update([
-            'vote_count' => $voteCount
-        ]);
-        Auth::user()->post_vote()->create([
-            'up' => true,
-            'post_id' => $comment->getAttributeValue('id')
-        ]);
-        return view('posts.show', compact($comment));
+    public function checkVotes(Comment $comment, $vote){
+        try{
+            $user_vote = Comment_Vote::findOrFail([
+                'comment_id' => $comment->getAttribute('id'),
+                'user_id' => Auth::id()]);
+            if($user_vote->getAttributeValue('up') == $vote){
+                return view('posts.show', compact('post'));
+            }else{
+                vote($comment, !$vote);
+            }
+        }catch (Exception $e){
+            vote($comment, $vote);
+        }
     }
 
-    public function downVote(Comment $comment)
+    public function vote(Comment $comment, $vote)
     {
-        $voteCount = $comment->getAttributeValue('vote_count') - 1;
+        if ($vote == true) {
+            $voteCount = $comment->getAttributeValue('vote_count') + 1;
+        }else {
+            $voteCount = $comment->getAttributeValue('vote_count') - 1;
+        }
         $comment->update([
             'vote_count' => $voteCount
         ]);
-        Auth::user()->post_vote()->create([
-            'up' => true,
-            'post_id' => $comment->getAttributeValue('id')
+        Auth::user()->comment_vote()->create([
+            'up' => $vote,
+            'comment_id' => $comment->getAttributeValue('id')
         ]);
-        return view('posts.show', compact($comment));
+        return view('posts.show', compact('post'));
     }
 }
