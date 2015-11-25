@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Post;
+use App\Post_Vote;
 use App\Tag;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
@@ -80,29 +82,34 @@ class PostController extends Controller
         //
     }
 
-    public function upVote(Post $post)
+    public function vote(Post $post, $vote)
     {
-        $voteCount = $post->getAttributeValue('vote_count') + 1;
-        $post->update([
-            'vote_count' => $voteCount
-        ]);
-        Auth::user()->post_vote()->create([
-            'up' => true,
-            'post_id' => $post->getAttributeValue('id')
-        ]);
-        return view('posts.show', compact('post'));
-    }
+        try{
+            Post_Vote::findOrFail([
+                'post_id' => $post->getAttribute('id'),
+                'user_id' => Auth::id()]);
+        }catch(ModelNotFoundException $e) {
 
-    public function downVote(Post $post)
-    {
-        $voteCount = $post->getAttributeValue('vote_count') - 1;
-        $post->update([
-            'vote_count' => $voteCount
-        ]);
-        Auth::user()->post_vote()->create([
-            'up' => false,
-            'post_id' => $post->getAttributeValue('id')
-        ]);
+            if (vote > 0) {
+                $voteCount = $post->getAttributeValue('vote_count') + 1;
+                $post->update([
+                    'vote_count' => $voteCount
+                ]);
+                Auth::user()->post_vote()->create([
+                    'up' => true,
+                    'post_id' => $post->getAttributeValue('id')
+                ]);
+            }else{
+                $voteCount = $post->getAttributeValue('vote_count') - 1;
+                $post->update([
+                    'vote_count' => $voteCount
+                ]);
+                Auth::user()->post_vote()->create([
+                    'up' => false,
+                    'post_id' => $post->getAttributeValue('id')
+                ]);
+            }
+        }
         return view('posts.show', compact('post'));
     }
 }
