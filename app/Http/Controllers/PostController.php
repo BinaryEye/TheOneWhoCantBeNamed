@@ -88,7 +88,7 @@ class PostController extends Controller
         try{
             $user_vote = Post_Vote::findOrFail([
                 'post_id' => $post->id,
-                'user_id' => Auth::id()]);
+                'user_id' => Auth::id()])->first();
             if($user_vote->up == $vote){
                 return view('posts.show', compact('post'));
             }else{

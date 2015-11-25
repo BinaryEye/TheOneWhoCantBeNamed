@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Tag_User;
 use App\User;
 use Auth;
 use Carbon\Carbon;
@@ -65,5 +66,12 @@ class UserController extends Controller
         Auth::user()->update($request->except('date_of_birth'));
         Auth::user()->update([Carbon::parse($request->get('date_of_birth'))]);
         return redirect(url('/users/show'))->with('message',"Successfully updated Your info.");
+    }
+
+    public function subscribeToTag($tag_id){
+        Auth::user()->tag()->create([
+            'user_id' => Auth::id(),
+            'tag_id' => $tag_id
+        ]);
     }
 }
