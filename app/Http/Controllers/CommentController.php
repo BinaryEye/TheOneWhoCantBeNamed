@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Comment;
 use App\Comment_Vote;
 use Auth;
+use Exception;
 use Validator;
 use Illuminate\Http\Request;
 use App\Http\Requests;
@@ -103,7 +104,8 @@ class CommentController extends Controller
         return view('posts.show', compact($comment->delete()));
     }
 
-    public function checkVotes(Comment $comment, $vote){
+    public function checkVotes(Comment $comment, Request $request){
+        $vote = $request->only('vote');
         try{
             $user_vote = Comment_Vote::findOrFail([
                 'comment_id' => $comment->getAttribute('id'),

@@ -83,7 +83,8 @@ class PostController extends Controller
         //
     }
 
-    public function checkVotes(Post $post, $vote){
+    public function checkVotes(Post $post, Request $request){
+        $vote = $request->only('vote');
         try{
             $user_vote = Post_Vote::findOrFail([
                 'post_id' => $post->getAttribute('id'),
