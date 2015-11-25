@@ -92,10 +92,10 @@ class PostController extends Controller
             if($user_vote->getAttributeValue('up') == $vote){
                 return view('posts.show', compact('post'));
             }else{
-                vote($post, !$vote);
+                $this->vote($post, !$vote);
             }
-        }catch (Exception $e){
-            vote($post, $vote);
+        }catch (ModelNotFoundException $e){
+            $this->vote($post, $vote);
         }
     }
 
