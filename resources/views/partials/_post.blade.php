@@ -2,7 +2,8 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                <div class="panel-heading">My Post</div>
+                @include('partials._warning')
+                <div class="panel-heading">{{$post->title}}</div>
                 <div class="panel-body">
                     <div class="col-md-1 posts">
                         {{$post->body}}
@@ -10,7 +11,7 @@
                         <br/>
 
                         <div class="votes">
-                            <a href="{{route('checkPostVotes',[$post])}}">
+                            <a href="{{route('upVote',[$post])}}">
                             <button type="button" class="btn btn-default btn-lg">
                                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">
                                     {{$post->upVotes()}}
@@ -18,7 +19,7 @@
                             </button>
                             </a>
 
-                            <a href="{{route('checkPostVotes',[$post])}}">
+                            <a href="{{route('downVote',[$post])}}">
                                 <button type="button" class="btn btn-default btn-lg">
                                     <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true">
                                         {{$post->downVotes()}}

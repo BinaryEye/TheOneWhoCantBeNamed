@@ -1,5 +1,13 @@
 <div class="form-group">
     <h4>
+        <label for="inputsm" class="col-md-2 control-label" style="padding-right: 45px;">Post Title</label>
+        <br/>
+        <br/>
+        <input name="title" class="form-control input-sm" style="width: 50%; margin-left: 45px"/>
+    </h4>
+</div>
+<div class="form-group">
+    <h4>
         <label for="inputsm" class="col-md-2 control-label">Post Content</label>
         <br/>
         <textarea name="body" class="form-control input-sm posts"></textarea>

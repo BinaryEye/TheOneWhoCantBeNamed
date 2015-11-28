@@ -111,6 +111,12 @@ body {
     display: inline-block;
     margin: 15px 30px;
 }
+.subscribed{
+    width: 170px;
+    text-align: center;
+    display: block;
+    margin: 15px 30px;
+}
 .votes{
     padding: 30px 300px;
 }

@@ -65,8 +65,8 @@ class UserController extends Controller
             'sex' => 'required',
             'date_of_birth' => 'required'
         ]);
-        Auth::user()->update($request->except('date_of_birth'));
-        Auth::user()->update([Carbon::parse($request->get('date_of_birth'))]);
+        $request['date_of_birth'] = Carbon::parse($request->get('date_of_birth'));
+        Auth::user()->update($request->all());
         return redirect(url('/users/show'))->with('message',"Successfully updated Your info.");
     }
 

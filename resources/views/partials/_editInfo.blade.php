@@ -96,7 +96,7 @@
 
 <div class="form-group" style="padding: 100px 120px 0 0;">
     <div class="col-md-6 col-md-offset-4">
-        <button type="submit" class="btn btn-primary update">
+        <button type="submit" class="btn btn-primary user">
             Update Info
         </button>
     </div>

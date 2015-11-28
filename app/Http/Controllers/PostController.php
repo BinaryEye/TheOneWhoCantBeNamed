@@ -12,12 +12,14 @@ use Auth;
 use Mockery\CountValidator\Exception;
 use Response;
 use Validator;
+use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
     private $post;
 
-    public function _construct(Post $post){
+    public function _construct(Post $post)
+    {
         $this->middleware('auth', ['only' => 'create', 'edit', 'destroy', 'upVote', 'downVote']);
         $this->$post = $post;
     }
@@ -28,21 +30,12 @@ class PostController extends Controller
         return view('posts.create', compact('tags'));
     }
 
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $validator = Validator::make($request->all(),[
-            'body' => 'required',
-            'private' => 'required',
-            'title' => 'required'
-        ]);
-        if($validator->fails()){
-            return Response::make($validator->messages(), 400);
-        }
-        //$post = Auth::user()->posts()->create($request->all());
         $post = new Post($request->all());
         Auth::user()->posts()->save($post);
         $post->tags()->attach($request->input('tags'));
-        return view('posts.show', compact($post));
+        return view('posts.show', compact('post'));
     }
 
 
@@ -55,10 +48,10 @@ class PostController extends Controller
     {
         $tags = Tag::lists('name', 'id');
         $selected_tags = $post->tags()->get()->lists('id')->toArray();
-        return view('posts.edit', compact('post','selected_tags','tags'));
+        return view('posts.edit', compact('post', 'selected_tags', 'tags'));
     }
 
-    public function update(Request $request, Post $post)
+    public function update(PostRequest $request, Post $post)
     {
         if ($post->user()->getResults() != Auth::user()) {
             return response('Unauthorized.', 401);
@@ -66,7 +59,7 @@ class PostController extends Controller
         $post->update($request->all());
         $post->tags()->detach();
         $post->tags()->attach($request->input('tags'));
-        return view('posts.show',compact($post));
+        return view('posts.show', compact('post'));
     }
 
 
@@ -75,7 +68,7 @@ class PostController extends Controller
         if ($post->user()->getResults() != Auth::user()) {
             return response('Unauthorized.', 401);
         }
-            return view('posts.show', compact($post->delete()));
+        return view('posts.show', compact($post->delete()));
     }
 
     public function getComments(Post $post)
@@ -83,36 +76,64 @@ class PostController extends Controller
         //
     }
 
-    public function checkVotes(Post $post, Request $request){
+    public function checkVotes(Post $post, Request $request)
+    {
         $vote = $request->only('vote');
-        try{
+        try {
             $user_vote = Post_Vote::findOrFail([
                 'post_id' => $post->id,
                 'user_id' => Auth::id()])->first();
-            if($user_vote->up == $vote){
+            if ($user_vote->up == $vote) {
                 return view('posts.show', compact('post'));
-            }else{
+            } else {
                 $this->vote($post, !$vote);
             }
-        }catch (ModelNotFoundException $e){
+        } catch (ModelNotFoundException $e) {
             $this->vote($post, $vote);
         }
     }
 
-    public function vote(Post $post, $vote)
+    public function upVote(Post $post)
     {
-            if ($vote == true) {
-                $voteCount = $post->getAttributeValue('vote_count') + 1;
-            }else {
-                $voteCount = $post->getAttributeValue('vote_count') - 1;
-            }
-            $post->update([
-                'vote_count' => $voteCount
-            ]);
-            Auth::user()->post_vote()->create([
-                'up' => $vote,
-                'post_id' => $post->getAttributeValue('id')
-            ]);
+
+        $user_vote = Post_Vote::where([
+            'post_id' => $post->id,
+            'user_id' => Auth::id(),
+            'up' => 1])->first();
+        if (!$user_vote) {
+            return $this->vote($post, 1);
+        } else {
+            return redirect()->route('posts.show', compact('post'))->with("warning", "You 've already upvoted this post");
+        }
+    }
+
+    public function downVote(Post $post)
+    {
+        $user_vote = Post_Vote::where([
+            'post_id' => $post->id,
+            'user_id' => Auth::id(),
+            'up' => 0])->first();
+        if (!$user_vote) {
+            return $this->vote($post, 0);
+        } else {
+            return redirect()->route('posts.show', compact('post'))->with("warning", "You 've already downvoted this post");
+        }
+    }
+
+    private function vote(Post $post, $vote)
+    {
+        if ($vote == 1) {
+            $voteCount = $post->getAttributeValue('vote_count') + 1;
+        } else {
+            $voteCount = $post->getAttributeValue('vote_count') - 1;
+        }
+        $post->update([
+            'vote_count' => $voteCount
+        ]);
+        Auth::user()->post_vote()->create([
+            'up' => $vote,
+            'post_id' => $post->getAttributeValue('id')
+        ]);
         return view('posts.show', compact('post'));
     }
 }

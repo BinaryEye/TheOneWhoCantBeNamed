@@ -4,7 +4,7 @@ $("document").ready(function(){
         $(this).parents(".dropdown").find('button').val($(this).text());
     });
 
-    $("button[type='submit']").on('click',function(){
+    $(".btn.btn-primary.user").on('click',function(){
         var year = $.trim($("#YearButton").text());
         var month = $.trim($("#MonthButton").text());
         var day = $.trim($("#DayButton").text());

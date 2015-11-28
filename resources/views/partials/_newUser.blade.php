@@ -115,7 +115,7 @@
 
 <div class="form-group" style="padding-top: 100px;">
     <div class="col-md-6 col-md-offset-4">
-        <button type="submit" class="btn btn-primary">
+        <button type="submit" class="btn btn-primary user">
             Register
         </button>
     </div>

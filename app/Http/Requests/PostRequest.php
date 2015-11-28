@@ -24,7 +24,9 @@ class PostRequest extends Request
     public function rules()
     {
         return [
-            'body' => 'required|max:200',
+            'body' => 'required|max:300',
+            'title' => 'required|max:30',
+            'tags' => 'required',
         ];
     }
 }
