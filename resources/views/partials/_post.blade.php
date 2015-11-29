@@ -12,13 +12,12 @@
 
                         <div class="votes">
                             <a href="{{route('upVote',[$post])}}">
-                            <button type="button" class="btn btn-default btn-lg">
+                                <button type="button" class="btn btn-default btn-lg">
                                 <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true">
                                     {{$post->upVotes()}}
                                 </span>
-                            </button>
+                                </button>
                             </a>
-
                             <a href="{{route('downVote',[$post])}}">
                                 <button type="button" class="btn btn-default btn-lg">
                                     <span class="glyphicon glyphicon-thumbs-down" aria-hidden="true">

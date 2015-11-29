@@ -51,7 +51,7 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
         return $this->hasMany('App\Post_Vote');
     }
 
-    public function tag(){
+    public function tags(){
         return $this->belongsToMany('App\Tag');
     }
 

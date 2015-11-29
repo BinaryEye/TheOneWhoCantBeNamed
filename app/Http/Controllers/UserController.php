@@ -70,13 +70,6 @@ class UserController extends Controller
         return redirect(url('/users/show'))->with('message',"Successfully updated Your info.");
     }
 
-    public function subscribeToTag($tag_id){
-        Auth::user()->tag()->create([
-            'user_id' => Auth::id(),
-            'tag_id' => $tag_id
-        ]);
-    }
-
     public function timeline(){
         $array = array();
         foreach(Auth::user()->tag() as $tag){

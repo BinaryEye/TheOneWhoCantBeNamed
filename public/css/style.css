@@ -1,34 +1,38 @@
 
-#dropMenu,#dropMenu1{
+#dropMenu, #dropMenu1 {
     position: relative;
-    width:950px;
-}
-#Years{
-    position: absolute;
-    top:0;
-    left: 325px;
+    width: 950px;
 }
 
-#Sex{
+#Years {
     position: absolute;
     top: 0;
     left: 325px;
 }
 
-#Months{
+#Sex {
     position: absolute;
-    top:0;
+    top: 0;
+    left: 325px;
+}
+
+#Months {
+    position: absolute;
+    top: 0;
     left: 475px;
 }
-#Days{
+
+#Days {
     position: absolute;
-    top:0;
+    top: 0;
     left: 625px;
 }
-.dropdown-toggle{
+
+.dropdown-toggle {
     width: 100px;
 }
-button[type="submit"]{
+
+button[type="submit"] {
     margin: 30px 170px;
 }
 
@@ -59,69 +63,90 @@ body {
     font-size: 96px;
 }
 
-.dropdown.name{
+.dropdown.name {
     padding-right: 30px;
     width: 200px;
     white-space: nowrap;
 }
 
-.info-group{
+.info-group {
     padding-bottom: 40px;
     font-size: 130%;
 }
-.form-control.input-sm.posts{
+
+.form-control.input-sm.posts {
     margin: 25px auto;
     height: 150px;
     width: 90%;
 }
-[type="submit"]{
+
+[type="submit"] {
     width: 120px;
-    height:40px;
+    height: 40px;
 }
-.linkbutton{
+
+.linkbutton {
     margin: 10px 0 0 10px;
     width: 120px;
     height: 40px;
 }
-.dropdown-menu{
-    max-height:130px;
-    _height:expression(this.scrollHeight>max-height?"250px":"auto");
-    overflow:auto;
-    overflow-x:hidden;
+
+.dropdown-menu {
+    max-height: 130px;
+    _height: expression(this.scrollHeight>max-height?"250px":"auto");
+    overflow: auto;
+    overflow-x: hidden;
 }
-.tags{
+
+.tags {
     margin-left: 45px;
-    width:90%;
+    width: 90%;
 }
-.select2-container ,.select2-choice, .select2-result-label {
+
+.select2-container, .select2-choice, .select2-result-label {
     height: 35px;
 }
 
 .select2-arrow, .select2-chosen {
     padding-top: 6px;
 }
-.col-md-1.posts{
+
+.col-md-1.posts {
     width: 900px;
     display: inline;
     padding: 30px;
 }
-.list-group.tags a{
+
+.list-group.tags a {
     width: 170px;
     text-align: center;
     display: inline-block;
-    margin: 15px 30px;
+    margin: 10px 30px;
 }
-.subscribed{
+
+.subscribed {
     width: 170px;
     text-align: center;
-    display: block;
     margin: 15px 30px;
 }
-.votes{
+
+.votes {
     padding: 30px 300px;
 }
-.votes a{
+
+.votes a {
     display: inline-block;
     text-align: center;
     margin: 20px 5px;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 10px;
+    border-collapse: expression('separate', cellSpacing = '2px');
+}
+
+table td, table tr {
+    padding: 0 100px 10px 0; /* cellpadding */
+    width:80px;
 }

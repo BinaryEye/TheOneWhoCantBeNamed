@@ -21,10 +21,11 @@ Route::controllers([
 ]);
 
 Route::resource('users', 'UserController');
-Route::get('tags','TagController@index');
 Route::resource('posts', 'PostController');
 
+Route::get('tags','TagController@index');
+Route::get('tags/subscribe/{tags}',['as' => 'subscribe','uses' => 'TagController@subscribe']);
+Route::get('tags/unsubscribe/{tags}',['as' => 'unsubscribe','uses' => 'TagController@unsubscribe']);
 Route::get("posts/upvote/{posts}", ['as' => 'upVote', 'uses' => 'PostController@upVote']);
 Route::get("posts/downvote/{posts}", ['as' => 'downVote', 'uses' => 'PostController@downVote']);
-
 Route::get("comments/vote/{posts}", ['as' => 'checkCommentVotes', 'uses' => 'PostController@checkVotes']);
