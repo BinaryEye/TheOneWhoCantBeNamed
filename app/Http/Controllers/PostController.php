@@ -59,7 +59,6 @@ class PostController extends Controller
         return view('posts.show', compact('post'));
     }
 
-
     public function destroy(Post $post)
     {
         if ($post->user()->getResults() != Auth::user()) {
@@ -73,31 +72,19 @@ class PostController extends Controller
         //
     }
 
-    public function checkVotes(Post $post, Request $request)
-    {
-        $vote = $request->only('vote');
-        try {
-            $user_vote = Post_Vote::findOrFail([
-                'post_id' => $post->id,
-                'user_id' => Auth::id()])->first();
-            if ($user_vote->up == $vote) {
-                return view('posts.show', compact('post'));
-            } else {
-                $this->vote($post, !$vote);
-            }
-        } catch (ModelNotFoundException $e) {
-            $this->vote($post, $vote);
-        }
-    }
-
     public function upVote(Post $post)
     {
-
-        $user_vote = Post_Vote::where([
+        $user_up_vote = Post_Vote::where([
             'post_id' => $post->id,
             'user_id' => Auth::id(),
             'up' => 1])->first();
-        if (!$user_vote) {
+        $user_down_vote = Post_Vote::where([
+            'post_id' => $post->id,
+            'user_id' => Auth::id(),
+            'up' => 0])->first();
+        if (!$user_up_vote) {
+            if($user_down_vote)
+                $user_down_vote = $user_down_vote->delete();
             return $this->vote($post, 1);
         } else {
             return redirect()->route('posts.show', compact('post'))->with("warning", "You 've already upvoted this post");
@@ -106,11 +93,17 @@ class PostController extends Controller
 
     public function downVote(Post $post)
     {
-        $user_vote = Post_Vote::where([
+        $user_up_vote = Post_Vote::where([
+            'post_id' => $post->id,
+            'user_id' => Auth::id(),
+            'up' => 1])->first();
+        $user_down_vote = Post_Vote::where([
             'post_id' => $post->id,
             'user_id' => Auth::id(),
             'up' => 0])->first();
-        if (!$user_vote) {
+        if (!$user_down_vote) {
+            if($user_up_vote)
+                $user_up_vote->delete();
             return $this->vote($post, 0);
         } else {
             return redirect()->route('posts.show', compact('post'))->with("warning", "You 've already downvoted this post");
