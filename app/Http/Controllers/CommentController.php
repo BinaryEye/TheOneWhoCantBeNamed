@@ -100,27 +100,49 @@ class CommentController extends Controller
         return view('posts.show', compact($comment->delete()));
     }
 
-    public function checkVotes(Comment $comment, Request $request){
-        $vote = $request->only('vote');
-        try{
-            $user_vote = Comment_Vote::findOrFail([
-                'comment_id' => $comment->getAttribute('id'),
-                'user_id' => Auth::id()]);
-            if($user_vote->getAttributeValue('up') == $vote){
-                return view('posts.show', compact('post'));
-            }else{
-                vote($comment, !$vote);
-            }
-        }catch (Exception $e){
-            vote($comment, $vote);
+    public function upVote(Comment $comment)
+    {
+        $user_up_vote = Comment_Vote::where([
+            'comment_id' => $comment->id,
+            'user_id' => Auth::id(),
+            'up' => 1])->first();
+        $user_down_vote = Comment_Vote::where([
+            'comment_id' => $comment->id,
+            'user_id' => Auth::id(),
+            'up' => 0])->first();
+        if (!$user_up_vote) {
+            if($user_down_vote)
+                $user_down_vote->delete();
+            return $this->vote($comment, 1);
+        } else {
+            return redirect()->route('comment.show', compact('comment'))->with("warning", "You 've already upvoted this comment");
         }
     }
 
-    public function vote(Comment $comment, $vote)
+    public function downVote(Comment $comment)
     {
-        if ($vote == true) {
+        $user_up_vote = Comment_Vote::where([
+            'post_id' => $comment->id,
+            'user_id' => Auth::id(),
+            'up' => 1])->first();
+        $user_down_vote = Comment_Vote::where([
+            'post_id' => $comment->id,
+            'user_id' => Auth::id(),
+            'up' => 0])->first();
+        if (!$user_down_vote) {
+            if($user_up_vote)
+                $user_up_vote->delete();
+            return $this->vote($comment, 0);
+        } else {
+            return redirect()->route('comments.show', compact('comment'))->with("warning", "You 've already downvoted this comment");
+        }
+    }
+
+    private function vote(Comment $comment, $vote)
+    {
+        if ($vote == 1) {
             $voteCount = $comment->getAttributeValue('vote_count') + 1;
-        }else {
+        } else {
             $voteCount = $comment->getAttributeValue('vote_count') - 1;
         }
         $comment->update([
@@ -130,6 +152,6 @@ class CommentController extends Controller
             'up' => $vote,
             'comment_id' => $comment->getAttributeValue('id')
         ]);
-        return view('posts.show', compact('post'));
+        return view('comments.show', compact('comment'));
     }
 }

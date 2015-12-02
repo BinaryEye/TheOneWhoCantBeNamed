@@ -84,7 +84,7 @@ class PostController extends Controller
             'up' => 0])->first();
         if (!$user_up_vote) {
             if($user_down_vote)
-                $user_down_vote = $user_down_vote->delete();
+                $user_down_vote->delete();
             return $this->vote($post, 1);
         } else {
             return redirect()->route('posts.show', compact('post'))->with("warning", "You 've already upvoted this post");
