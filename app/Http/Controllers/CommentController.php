@@ -13,12 +13,9 @@ use Response;
 
 class CommentController extends Controller
 {
-    private $comment;
-
-    public function _construct(Comment $comment)
+    public function __construct(Comment $comment)
     {
-        $this->$comment = $comment;
-        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy', 'upVote', 'downVote']);
+        $this->middleware('auth', ['except' => 'show']);
     }
 
     /**

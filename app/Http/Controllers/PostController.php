@@ -16,12 +16,9 @@ use App\Http\Requests\PostRequest;
 
 class PostController extends Controller
 {
-    private $post;
-
-    public function _construct(Post $post)
+    public function __construct(Post $post)
     {
-        $this->middleware('auth', ['only' => 'create', 'edit', 'destroy', 'upVote', 'downVote']);
-        $this->$post = $post;
+        $this->middleware('auth', ['except' => 'show']);
     }
 
     public function create()
