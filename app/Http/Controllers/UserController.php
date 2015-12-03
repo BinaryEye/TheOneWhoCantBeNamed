@@ -80,7 +80,16 @@ class UserController extends Controller
         $posts = collect([]);
         foreach ($tags as $tag) {
             foreach ($tag->post()->get() as $post) {
-                $posts->push($post);
+                if(!Auth::user()->type){
+                    if(!$post->private)
+                        $posts->push($post);
+                    else{
+                        if($post->user_id == Auth::id())
+                            $posts->push($post);
+                    }
+                }else{
+                    $posts->push($post);
+                }
             }
         }
         $posts =  new Paginator($posts->unique('id'),10);
@@ -90,6 +99,5 @@ class UserController extends Controller
         else{
             return view('welcome',compact('posts','tags'))->with('message','Welcome '. Auth::user()->fullName());
         }
-
     }
 }
