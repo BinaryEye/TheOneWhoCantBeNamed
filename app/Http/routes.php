@@ -22,8 +22,8 @@ Route::controllers([
 
 Route::resource('users', 'UserController');
 Route::resource('posts', 'PostController');
+Route::resource('tags','TagController');
 
-Route::get('tags','TagController@index');
 Route::get('tags/subscribe/{tags}',['as' => 'subscribe','uses' => 'TagController@subscribe']);
 Route::get('tags/unsubscribe/{tags}',['as' => 'unsubscribe','uses' => 'TagController@unsubscribe']);
 Route::get("posts/upvote/{posts}", ['as' => 'upVote', 'uses' => 'PostController@upVote']);

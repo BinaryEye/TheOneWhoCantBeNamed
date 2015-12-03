@@ -58,4 +58,8 @@ class User extends Model implements AuthenticatableContract,AuthorizableContract
     public function type(){
         return $this->type;
     }
+
+    public function fullName(){
+        return $this->first_name . ' ' . $this->last_name;
+    }
 }

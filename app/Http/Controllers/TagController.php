@@ -62,8 +62,10 @@ class TagController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Tag $tag)
     {
+        $posts = $tag->post()->simplePaginate(10);
+        return view('tags.show',compact('posts','tag'));
         //
     }
 

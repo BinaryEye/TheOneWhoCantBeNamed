@@ -8,5 +8,6 @@
             </div>
         @endif
     </div>
+    @include('partials._avatar')
 
 @endsection

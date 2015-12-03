@@ -5,11 +5,12 @@
                 @include('partials._warning')
                 <div class="panel-heading">{{$post->title}}</div>
                 <div class="panel-body">
-                    <div class="col-md-1 posts">
+                    @include('partials._avatar')
+                    <br/>
+                    <div class="col-md-0 posts">
                         {{$post->body}}
                         <br/>
                         <br/>
-
                         <div class="votes">
                             <a href="{{route('upVote',[$post])}}">
                                 <button type="button" class="btn btn-default btn-lg">
@@ -31,8 +32,8 @@
                         <br/>
 
                         <div class="list-group tags">
-                            @foreach($post->tags()->lists('name') as $tag)
-                                <a href="#" class="list-group-item">{{$tag}}</a>
+                            @foreach($post->tags()->get() as $tag)
+                                <a href="{{route('tags.show',[$tag])}}" class="list-group-item">{{$tag->name}}</a>
                             @endforeach
                         </div>
                     </div>
