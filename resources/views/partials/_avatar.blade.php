@@ -14,7 +14,7 @@
                 {{$post->user()->get()->first()->fullName()}}
             </p>
             <p>
-                created {{$diff}}
+                posted {{$diff}}
             </p>
         </div>
     </div>

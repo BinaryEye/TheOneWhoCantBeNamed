@@ -7,8 +7,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Register</div>
                     <div class="panel-body">
-                        @include('partials._errors')
-
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/auth/register') }}">
                             @include('partials._newUser')
                         </form>

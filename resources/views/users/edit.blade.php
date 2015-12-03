@@ -7,7 +7,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Edit Info</div>
                     <div class="panel-body">
-                        @include('partials._errors')
                         <form class="form-horizontal" role="form" method="POST" action="{{ url('/users/update') }}">
                             @include('partials._editInfo')
                         </form>

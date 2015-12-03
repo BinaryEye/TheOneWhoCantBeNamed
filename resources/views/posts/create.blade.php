@@ -6,7 +6,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Create a new Post</div>
                     <div class="panel-body">
-                        @include('partials._errors')
                         {!! Form::open(['class' => 'form-horizontal', 'method' => 'POST', 'action' =>
                         ['PostController@store']])!!}
                         @include('partials._newPost')

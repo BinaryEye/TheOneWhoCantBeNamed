@@ -6,7 +6,6 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">Create a new Post</div>
                     <div class="panel-body">
-                        @include('partials._errors')
                         {!! Form::model($post, ['class' => 'form-horizontal', 'method' => 'Put', 'action' =>
                         ['PostController@update',$post]])!!}
                         @include('partials._editPost')

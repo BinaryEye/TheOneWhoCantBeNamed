@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Laravel</title>
     <link href="https://fonts.googleapis.com/css?family=Lato:100" rel="stylesheet" type="text/css">
-    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/css/select2.min.css" rel="stylesheet"/>
     <link href="{{ asset('/css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('/css/style.css') }}" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="{{asset('css/font-awesome.min.css')}}">
@@ -26,7 +26,8 @@
 <nav class="navbar navbar-default">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1">
                 <span class="sr-only">Toggle Navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -45,11 +46,13 @@
                     <li><a href="{{ url('/auth/register') }}">Register</a></li>
                 @else
                     <li class="dropdown name">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false" style="width: 150px;">{{ ucfirst(Auth::user()->first_name) . " " . ucfirst(Auth::user()->last_name)}}
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"
+                           style="width: 150px;">{{ ucfirst(Auth::user()->first_name) . " " . ucfirst(Auth::user()->last_name)}}
                             <span class="caret"></span></a>
                         <ul class="dropdown-menu" role="menu" style="width: 100%;">
                             <li><a href="{{ url('/users/show') }}">My Info</a></li>
                             <li><a href="{{ url('/auth/logout') }}">Logout</a></li>
+                            <li><a href="{{ route('tags.index') }}">Tags</a></li>
                         </ul>
                     </li>
                 @endif
@@ -58,8 +61,18 @@
     </div>
 </nav>
 
-@yield('content')
-
+@include('partials._message')
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-body" style="padding: 50px 100px 30% 100px">
+                    @yield('content')
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 <!-- Scripts -->
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.4/js/bootstrap.min.js"></script>

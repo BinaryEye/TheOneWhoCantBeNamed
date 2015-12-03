@@ -2,7 +2,6 @@
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
             <div class="panel panel-default">
-                @include('partials._warning')
                 <div class="panel-heading">{{$post->title}}</div>
                 <div class="panel-body">
                     @include('partials._avatar')

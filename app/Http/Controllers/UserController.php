@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Pagination\Paginator;
 use Response;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -82,6 +83,13 @@ class UserController extends Controller
                 $posts->push($post);
             }
         }
-        return new Paginator($posts->unique('id'),10);
+        $posts =  new Paginator($posts->unique('id'),10);
+        if(strpos(redirect()->back()->getTargetUrl(),'login') === false){
+            return view('welcome',compact('posts','tags'));
+        }
+        else{
+            return view('welcome',compact('posts','tags'))->with('message','Welcome '. Auth::user()->fullName());
+        }
+
     }
 }

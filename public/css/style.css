@@ -1,4 +1,3 @@
-
 #dropMenu, #dropMenu1 {
     position: relative;
     width: 950px;
@@ -44,14 +43,12 @@ body {
 }
 
 .container {
-    text-align: center;
     vertical-align: middle;
     margin: 20px auto;
     padding: 0;
     width: 80%;
     font-weight: 100;
-    font-size: 200%;
-    font-family: 'Lato';
+    font-size: 180%;
 }
 
 .content {
@@ -150,3 +147,13 @@ table td, table tr {
     padding: 0 100px 10px 0; /* cellpadding */
     width:80px;
 }
+
+.subscribeNow{
+    font-weight: 200;
+    font-size: x-large;
+    display: inline-block;
+    text-align: center;
+    margin-left: 350px;
+
+}
+
