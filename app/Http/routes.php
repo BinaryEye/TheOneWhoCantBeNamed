@@ -28,4 +28,4 @@ Route::get('tags/subscribe/{tags}',['as' => 'subscribe','uses' => 'TagController
 Route::get('tags/unsubscribe/{tags}',['as' => 'unsubscribe','uses' => 'TagController@unsubscribe']);
 Route::get("posts/upvote/{posts}", ['as' => 'upVote', 'uses' => 'PostController@upVote']);
 Route::get("posts/downvote/{posts}", ['as' => 'downVote', 'uses' => 'PostController@downVote']);
-Route::get("comments/vote/{posts}", ['as' => 'checkCommentVotes', 'uses' => 'PostController@checkVotes']);
+Route::get('/timeline', 'UserController@timeLine');

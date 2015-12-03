@@ -70,13 +70,15 @@ class UserController extends Controller
         return redirect(url('/users/show'))->with('message',"Successfully updated Your info.");
     }
 
-    public function timeline(){
+    public function timeLine(){
         $array = array();
-        foreach(Auth::user()->tag() as $tag){
-            foreach(Post_Tag::findOrFail(['tag_id' => $tag->id]) as $entry){
-                $post = Post::findOrFail(['id' => $entry->post_id]);
-                $array = array_add(['post'], $post, 0);
+        $user = User::where(['id' => 1])->first();
+        foreach($user->tags() as $tag){
+            foreach(Post_Tag::where(['tag_id' => $tag->id]) as $entry){
+                $post = Post::where(['id' => $entry->post_id])->first();
+                array_add($array, $post->id, $post);
             }
         }
+        return $array;
     }
 }
