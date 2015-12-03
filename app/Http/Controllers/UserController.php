@@ -19,6 +19,7 @@ class UserController extends Controller
     public function __construct()
     {
         $this->middleware('auth', ['except' => ['create']]);
+        $this->middleware('admin', ['only' => ['makeAdmin']]);
     }
 
     /**
@@ -99,5 +100,13 @@ class UserController extends Controller
         else{
             return view('welcome',compact('posts','tags'))->with('message','Welcome '. Auth::user()->fullName());
         }
+    }
+
+    public function makeAdmin(User $user)
+    {
+        $user->update([
+            'type' => 1
+        ]);
+        return redirect('/');
     }
 }
