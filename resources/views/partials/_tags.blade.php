@@ -3,7 +3,7 @@
         <tr>
             <td class="tags">
                 <div class="list-group tags">
-                    <a href="#" class="list-group-item">{{$tag->name}}</a>
+                    <a href="{{route('tags.show',[$tag])}}" class="list-group-item">{{$tag->name}}</a>
                     </a>
                 </div>
             </td>

@@ -11,7 +11,7 @@
         </div>
         <div style="margin-left: 40px">
             <p>
-                {{Auth::user()->fullName()}}
+                {{$post->user()->get()->first()->fullName()}}
             </p>
             <p>
                 created {{$diff}}

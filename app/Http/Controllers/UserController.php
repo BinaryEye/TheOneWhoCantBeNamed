@@ -75,8 +75,7 @@ class UserController extends Controller
 
     public function timeLine()
     {
-        $user = User::where(['id' => 1])->first();
-        $tags = $user->tags()->get();
+        $tags = Auth::user()->tags()->get();
         $posts = collect([]);
         foreach ($tags as $tag) {
             foreach ($tag->post()->get() as $post) {
