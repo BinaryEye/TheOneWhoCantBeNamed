@@ -27,3 +27,4 @@ Route::get('tags/unsubscribe/{tags}',['as' => 'unsubscribe','uses' => 'TagContro
 Route::get("posts/upvote/{posts}", ['as' => 'upVote', 'uses' => 'PostController@upVote']);
 Route::get("posts/downvote/{posts}", ['as' => 'downVote', 'uses' => 'PostController@downVote']);
 Route::get('/timeline', 'UserController@timeLine');
+Route::get('/{posts}/comments', 'PostController@getComments');

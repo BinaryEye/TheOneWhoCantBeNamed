@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Comment;
 use App\Post;
 use App\Post_Vote;
 use App\Tag;
@@ -69,7 +70,13 @@ class PostController extends Controller
 
     public function getComments(Post $post)
     {
-        //
+        $comments = $post->comments()->getResults()->groupBy('parent_id');
+        $rootComments = $comments->get(null)->groupBy('id');
+        $filterOutKeys = array('');
+        $filteredArr = array_diff_key($comments->toArray(), array_flip( $filterOutKeys ));
+        return [
+            'root_comments' => $rootComments,
+            'child_comments' => $filteredArr];
     }
 
     public function upVote(Post $post)
