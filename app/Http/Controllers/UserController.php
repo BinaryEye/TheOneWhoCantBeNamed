@@ -109,4 +109,16 @@ class UserController extends Controller
         ]);
         return redirect('/');
     }
+
+    public function history($id){
+        $user = User::where(['id' => $id])->first();
+        $posts = $user->posts()->getResults();
+        $comments = $user->comments()->getResults();
+        $post_votes = $user->post_vote()->getResults();
+        $comment_votes = $user->comment_vote()->getResults();
+        return ['posts' => $posts,
+        'comments' => $comments,
+        'post_votes' => $post_votes,
+        'comment_votes' => $comment_votes];
+    }
 }

@@ -29,3 +29,4 @@ Route::get("posts/downvote/{posts}", ['as' => 'downVote', 'uses' => 'PostControl
 Route::get('/timeline', 'UserController@timeLine');
 Route::get('/{posts}/comments', 'PostController@getComments');
 Route::post('/admin', 'UserController@makeAdmin');
+Route::get('/{users}/history', 'UserController@history');

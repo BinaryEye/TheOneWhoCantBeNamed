@@ -94,7 +94,7 @@ class PostController extends Controller
                 $user_down_vote->delete();
             return $this->vote($post, 1);
         } else {
-            return redirect()->route('posts.show', compact('post'))->with("warning", "You 've already upvoted this post");
+            return redirect()->route('posts.show', compact('post'))->with("warning", "You've already upvoted this post");
         }
     }
 
@@ -113,7 +113,7 @@ class PostController extends Controller
                 $user_up_vote->delete();
             return $this->vote($post, 0);
         } else {
-            return redirect()->route('posts.show', compact('post'))->with("warning", "You 've already downvoted this post");
+            return redirect()->route('posts.show', compact('post'))->with("warning", "You've already downvoted this post");
         }
     }
 
